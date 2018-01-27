@@ -1,0 +1,58 @@
+interface Node {
+  id: ID!
+}
+
+type Project implements Node {
+  id: ID!
+
+  name: String
+
+  description: String
+
+  state: String
+
+  pid: String  
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+
+  hasPreviousPage: Boolean!
+
+  startCursor: String
+
+  endCursor: String
+}
+
+
+type ProjectConnection {
+  pageInfo: PageInfo!
+
+  edges: [ProjectEdge]
+}
+
+type ProjectEdge {
+  node: Project
+
+  cursor: String!
+}
+
+type User implements Node {
+  id: ID!
+
+  pid: String
+
+  name: String
+
+  email: String
+
+  password: String
+
+  projects(after: String, first: Int, before: String, last: Int, state: String, categories: String, query: String): ProjectConnection
+}
+
+type Query {
+  node(id: ID!): Node
+
+  viewer(userId: String, name: String): User
+}
